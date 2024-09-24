@@ -116,12 +116,12 @@ class CarStoreScreen extends StatelessWidget {
         child: Column(
           children: [
             ListView.builder(
-              shrinkWrap: true, // Позволяет ListView корректно работать внутри SingleChildScrollView
-              physics: NeverScrollableScrollPhysics(), // Отключаем отдельный скролл для ListView
+              shrinkWrap: true, 
+              physics: NeverScrollableScrollPhysics(), 
               itemCount: cars.length,
               itemBuilder: (context, index) {
                 final car = cars[index];
-                return CarCard(car: car); // Используем CarCard для каждого авто
+                return CarCard(car: car);
               },
             ),
           ],
