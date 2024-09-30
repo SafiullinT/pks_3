@@ -1,131 +1,63 @@
 import 'package:flutter/material.dart';
 import '../models/car.dart';
+import 'add_car_screen.dart';
 import '../components/car_card.dart';
 
-class CarStoreScreen extends StatelessWidget {
-  final List<Car> cars = [
-    Car(
-      'Tesla Model S',
-      'assets/tesla_model_s.jpg',
-      79999,
-      'Электрический седан с невероятным запасом хода и высокой производительностью. Модель S отличается премиальным интерьером и поддержкой автономного вождения.',
-      '1020 л.с.',
-      '2.1 сек до 100 км/ч',
-      'Электрический',
-      '322 км/ч',
-    ),
-    Car(
-      'BMW X5',
-      'assets/bmw_x5.jpg',
-      60999,
-      'Просторный внедорожник с роскошным интерьером и передовыми технологиями. Мощный двигатель и система полного привода обеспечивают отличную динамику на дороге и вне её.',
-      '340 л.с.',
-      '5.3 сек до 100 км/ч',
-      'Бензиновый',
-      '243 км/ч',
-    ),
-    Car(
-      'Audi A6',
-      'assets/audi_a6.jpg',
-      55999,
-      'Среднеразмерный седан премиум-класса с высоким уровнем комфорта и передовыми системами безопасности. Оснащён новейшими технологиями и мощным двигателем.',
-      '335 л.с.',
-      '5.1 сек до 100 км/ч',
-      'Бензиновый',
-      '250 км/ч',
-    ),
-    Car(
-      'Mercedes-Benz E-Class',
-      'assets/mercedes_e_class.jpg',
-      64999,
-      'Комфортный бизнес-седан с высокотехнологичными решениями. Модель E-Class известна своим плавным ходом, роскошным салоном и мощными двигателями.',
-      '367 л.с.',
-      '4.9 сек до 100 км/ч',
-      'Бензиновый',
-      '250 км/ч',
-    ),
-    Car(
-      'Ford Mustang',
-      'assets/ford_mustang.jpg',
-      55999,
-      'Легендарный спортивный автомобиль с мощным двигателем и агрессивным дизайном. Mustang остаётся символом американской автопромышленности и высоких скоростей.',
-      '450 л.с.',
-      '4.3 сек до 100 км/ч',
-      'Бензиновый',
-      '250 км/ч',
-    ),
-    Car(
-      'Porsche 911',
-      'assets/porsche_911.jpg',
-      99999,
-      'Икона спортивных автомобилей. Porsche 911 сочетает в себе высочайшую динамику, потрясающий дизайн и немецкую инженерную точность.',
-      '450 л.с.',
-      '3.4 сек до 100 км/ч',
-      'Бензиновый',
-      '308 км/ч',
-    ),
-    Car(
-      'Lamborghini Huracan',
-      'assets/lamborghini_huracan.jpg',
-      209999,
-      'Суперкар с мощным двигателем V10 и впечатляющим дизайном. Huracan – это мощь, скорость и высший уровень автомобильного искусства.',
-      '640 л.с.',
-      '2.9 сек до 100 км/ч',
-      'Бензиновый',
-      '325 км/ч',
-    ),
-    Car(
-      'Ferrari Roma',
-      'assets/ferrari_roma.jpg',
-      219999,
-      'Стильный и элегантный спортивный автомобиль с отличными характеристиками и комфортным салоном. Roma – это современное воплощение роскоши и производительности.',
-      '620 л.с.',
-      '3.4 сек до 100 км/ч',
-      'Бензиновый',
-      '320 км/ч',
-    ),
-    Car(
-      'Chevrolet Corvette',
-      'assets/chevrolet_corvette.jpg',
-      79999,
-      'Американская классика спортивных автомобилей. Corvette предлагает отличную динамику и стильный внешний вид по разумной цене.',
-      '495 л.с.',
-      '2.9 сек до 100 км/ч',
-      'Бензиновый',
-      '312 км/ч',
-    ),
-    Car(
-      'Aston Martin DB11',
-      'assets/aston_martin_db11.jpg',
-      205000,
-      'Роскошный и мощный британский гранд-турер с потрясающим дизайном и высоким уровнем комфорта. DB11 – это сочетание элегантности и мощности.',
-      '630 л.с.',
-      '3.7 сек до 100 км/ч',
-      'Бензиновый',
-      '322 км/ч',
-    ),
-  ];
+class CarStoreScreen extends StatefulWidget {
+  final List<Car> cars;
+  final Function addCar;
+
+  CarStoreScreen({required this.cars, required this.addCar});
+
+  @override
+  _CarStoreScreenState createState() => _CarStoreScreenState();
+}
+
+class _CarStoreScreenState extends State<CarStoreScreen> {
+  List<Car> cars = [];
+
+  @override
+  void initState() {
+    super.initState();
+    cars = widget.cars;
+  }
+
+  void _deleteCar(Car car) {
+    setState(() {
+      cars.remove(car);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CarStore'),
+        title: Text('Car Store'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true, // Позволяет ListView корректно работать внутри SingleChildScrollView
-              physics: NeverScrollableScrollPhysics(), // Отключаем отдельный скролл для ListView
-              itemCount: cars.length,
-              itemBuilder: (context, index) {
-                final car = cars[index];
-                return CarCard(car: car); // Используем CarCard для каждого авто
-              },
+      body: ListView.builder(
+        itemCount: cars.length,
+        itemBuilder: (context, index) {
+          final car = cars[index];
+          return CarCard(
+            car: car,
+            onDeleteCar: () => _deleteCar(car), // Передаём функцию удаления
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddCarScreen(onAddCar: (newCar) {
+                setState(() {
+                  cars.add(newCar);
+                });
+              }),
             ),
-          ],
-        ),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
