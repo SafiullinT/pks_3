@@ -17,7 +17,7 @@ class CarDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(car.imagePath, width: 300, height: 200),
+            Image.network(car.imageUrl, width: 300, height: 200),
             SizedBox(height: 20),
             Text(
               car.description,
@@ -30,16 +30,16 @@ class CarDetailScreen extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            // Характеристики автомобиля
+
             Text(
               'Характеристики:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            Text('Мощность: ${car.power}', style: TextStyle(fontSize: 16)),
+            Text('Мощность: ${car.horsepower}', style: TextStyle(fontSize: 16)),
             Text('Разгон до 100 км/ч: ${car.acceleration}', style: TextStyle(fontSize: 16)),
             Text('Тип двигателя: ${car.engineType}', style: TextStyle(fontSize: 16)),
-            Text('Максимальная скорость: ${car.topSpeed}', style: TextStyle(fontSize: 16)),
+            Text('Максимальная скорость: ${car.maxSpeed}', style: TextStyle(fontSize: 16)),
           ],
         ),
       ),
