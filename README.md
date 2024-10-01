@@ -7,4 +7,4 @@
 ## Главная страница
 ![Главная страница](https://github.com/SafiullinT/pks_3/blob/pks_4/images/2.jpg)
 ## Страница добавленного товара
-![Главная страница](https://github.com/SafiullinT/pks_3/blob/pks_4/images3.jpg)
+![Страница товара](https://github.com/SafiullinT/pks_3/blob/pks_4/images/3.jpg)
